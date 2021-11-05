@@ -1,5 +1,5 @@
 const mongoose=require('mongoose');
-const prodectSchema =mongoose.Schema({
+const productSchema = new mongoose.Schema({
     name:{
         type:String,
         required:[true,"Please Enter Product name"]
@@ -9,4 +9,4 @@ const prodectSchema =mongoose.Schema({
         required:[true,"Please Enter Product Description"]
     }
 })
-module.exports = mongoose.model("Product",prodectSchema);
+module.exports = mongoose.model("Product",productSchema);
