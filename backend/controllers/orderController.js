@@ -7,3 +7,16 @@ exports.createOrder = async (req, res,next) => {
         order
     })
 }
+exports.getAllOrders = async (req, res,next) => {
+    const orders = await Order.find({user:req.params.id});
+    if(!orders){
+        return res.status(404).json({
+            success: 'false',
+            message: 'No orders found'
+        })
+    }
+    res.status(200).json({
+        success: 'true',
+        orders
+    })
+}
