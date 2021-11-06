@@ -6,9 +6,7 @@ const connectDatabase =()=>{
             useUnifiedTopology: true,
         }).then((data) => {
             console.log(`Database is connected ${data.connection.host}`);
-        }).catch((err) => {
-            console.log(err);
-        });
+        })
 }
 
 module.exports = connectDatabase 
