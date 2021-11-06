@@ -1,5 +1,6 @@
 const Product =require("../models/productModel")
-
+const ErrorHandler = require('../utils/errorHandler');
+const catchAsyncError=require('../middleware/catchAsyncError');
 //create Product
 exports.createProduct = async (req,res,next) =>{
     const product = await Product.create(req.body);
@@ -19,10 +20,7 @@ exports.getAllProducts =async (req,res) =>{
 exports.updateProduct = async (req,res) =>{
     let product = await Product.findById(req.params.id)
     if(!product){
-        return res.status(500).json({
-            success: 'false',
-            message: 'Product not found'
-        })
+        return new ErrorHandler('Product not found',404);
     }
     product=await Product.findByIdAndUpdate(req.params.id,req.body,{
         new:true,
@@ -38,10 +36,7 @@ exports.updateProduct = async (req,res) =>{
 exports.deleteProduct = async (req,res) =>{
     let product = await Product.findById(req.params.id)
     if(!product){
-        return res.status(500).json({
-            success: 'false',
-            message: 'Product not found'
-        })
+      return new ErrorHandler('Product not found',404);
     }
     await product.remove();
     res.status(200).json({

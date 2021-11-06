@@ -13,6 +13,21 @@ exports.createOrder = catchAsyncError( async (req, res,next) => {
     })
 }
 )
+exports.updateOrder =catchAsyncError( async (req,res,next) =>{
+    let order = await Order.findById(req.params.id)
+    if(!order){
+        return next(new ErrorHandler('No order found with this id',404))
+    }
+    order=await Order.findByIdAndUpdate(req.params.id,req.body,{
+        new:true,
+        runValidators:true,
+        useFindAndModify:false
+    })
+    res.status(200).json({
+        success: 'true',
+        order
+    })
+})
 exports.deleteOrder =catchAsyncError( async (req, res,next) => {
     let order = await Order.findById(req.params.id)
     if(!order){
